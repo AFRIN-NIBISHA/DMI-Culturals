@@ -457,7 +457,7 @@ ul {
 
 /* Sections Global */
 .section {
-  padding: 100px 20px;
+  padding: 40px 20px;
   position: relative;
   z-index: 10;
 }
@@ -465,7 +465,7 @@ ul {
 .section-title {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   background: linear-gradient(to right, var(--accent-2), var(--accent-1));
   -webkit-background-clip: text;
   background-clip: text;
@@ -484,7 +484,7 @@ ul {
 }
 
 .stats-section {
-  padding: 100px 0;
+  padding: 40px 0;
   background: linear-gradient(180deg, transparent, rgba(255, 0, 127, 0.05), transparent);
 }
 
@@ -499,7 +499,7 @@ ul {
 
 .stat-card {
   text-align: center;
-  padding: 40px 20px;
+  padding: 30px 20px;
   background: rgba(16, 16, 26, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
@@ -736,11 +736,11 @@ ul {
 
 /* Footer */
 .footer {
-  padding: 80px 40px;
+  padding: 40px 20px;
   text-align: center;
   border-top: 1px solid var(--glass-border);
   background: rgba(0, 0, 0, 0.5);
-  margin-top: 100px;
+  margin-top: 40px;
 }
 
 .footer-logo-wrap {
