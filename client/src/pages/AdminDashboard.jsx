@@ -91,6 +91,17 @@ const AdminDashboard = () => {
         ? students
         : students.filter(s => s.reg_type === filter);
 
+    const handleDeleteRegistration = async (id) => {
+        if (window.confirm('Are you sure you want to delete this registration?')) {
+            try {
+                await axios.delete(`http://localhost:5000/api/admin/registrations/${id}`);
+                fetchData();
+            } catch (err) {
+                alert('Failed to delete registration');
+            }
+        }
+    };
+
     return (
         <div className="dashboard-container">
             <aside className="sidebar glass-panel">
@@ -259,6 +270,7 @@ const AdminDashboard = () => {
                                     <th>Event</th>
                                     <th>Dept/Year</th>
                                     <th>House</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -282,11 +294,20 @@ const AdminDashboard = () => {
                                                 <span className="house-tag none">N/A</span>
                                             )}
                                         </td>
+                                        <td>
+                                            <button
+                                                onClick={() => handleDeleteRegistration(s.id)}
+                                                style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1.2rem', padding: '5px' }}
+                                                title="Delete Registration"
+                                            >
+                                                🗑️
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
-                                {students.length === 0 && (
+                                {filteredData.length === 0 && (
                                     <tr>
-                                        <td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>No students registered yet.</td>
+                                        <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>No registrations found.</td>
                                     </tr>
                                 )}
                             </tbody>

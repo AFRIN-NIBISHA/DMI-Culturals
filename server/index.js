@@ -121,7 +121,6 @@ initDb().then(db => {
         }
     });
 
-    // Admin: Get all student registrations
     app.get('/api/admin/students', async (req, res) => {
         try {
             const students = await db.all(`
@@ -137,6 +136,16 @@ initDb().then(db => {
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Error fetching registrations' });
+        }
+    });
+
+    app.delete('/api/admin/registrations/:id', async (req, res) => {
+        const { id } = req.params;
+        try {
+            await db.run('DELETE FROM registrations WHERE id = ?', [id]);
+            res.json({ message: 'Registration deleted successfully' });
+        } catch (error) {
+            res.status(500).json({ message: 'Error deleting registration' });
         }
     });
 
