@@ -390,15 +390,26 @@ function Landing() {
         <h2 className="section-title scroll-observe">Moments</h2>
         <div className="gallery-grid">
           {galleryItems.length > 0 ? (
-            galleryItems.map((item, i) => (
-              <div className="gallery-item scroll-observe" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-                <img src={item.image_url} alt={item.category} />
-              </div>
-            ))
+            galleryItems.map((item, i) => {
+              // Fix for production paths (if using local assets via admin panel)
+              let imgSrc = item.image_url;
+              if (imgSrc.includes('sports.png')) imgSrc = sportsImg;
+              else if (imgSrc.includes('food.png')) imgSrc = foodImg;
+              else if (imgSrc.includes('cultural.png')) imgSrc = culturalImg;
+              else if (imgSrc.includes('sports2.png')) imgSrc = sports2Img;
+              else if (imgSrc.includes('food2.png')) imgSrc = food2Img;
+              else if (imgSrc.includes('cultural2.png')) imgSrc = cultural2Img;
+
+              return (
+                <div className="gallery-item scroll-observe" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <img src={imgSrc} alt={item.category} loading="eager" />
+                </div>
+              );
+            })
           ) : (
             defaultGallery.map((img, i) => (
               <div className="gallery-item scroll-observe" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-                <img src={img} alt={`Gallery ${i}`} />
+                <img src={img} alt={`Gallery ${i}`} loading="eager" />
               </div>
             ))
           )}
