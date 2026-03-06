@@ -1,0 +1,14 @@
+{
+    "name": "dmi-culturals-monorepo",
+    "version": "1.0.0",
+    "description": "Root package for DMI Culturals project",
+    "main": "index.js",
+    "scripts": {
+        "start": "cd server && npm start",
+        "build": "cd server && npm install",
+        "postinstall": "cd server && npm install"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

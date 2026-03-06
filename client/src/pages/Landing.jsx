@@ -82,7 +82,7 @@ function Landing() {
     setRegStatus('submitting');
     try {
       const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
-      const response = await fetch(`${apiUrl}/api/register`, {
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
