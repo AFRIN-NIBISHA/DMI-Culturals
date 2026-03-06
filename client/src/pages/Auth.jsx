@@ -71,7 +71,14 @@ const Auth = () => {
             // Reset only event related fields
             setFormData(prev => ({ ...prev, event_name: '' }));
         } catch (err) {
-            alert(err.response?.data?.message || 'Registration failed');
+            console.error('Registration error:', err);
+            if (err.response) {
+                alert(err.response.data?.message || 'Registration failed');
+            } else if (err.request) {
+                alert('Connection to server failed. Please ensure the backend is running and accessible.');
+            } else {
+                alert('Registration failed. Please try again.');
+            }
         }
     };
 

@@ -138,6 +138,18 @@ async function initDb() {
         await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', ['stats_volunteers', '50+']);
     }
 
+    // Seed Admin User
+    const adminUser = await db.get('SELECT * FROM users WHERE email = ?', ['admin@dmiec.edu']);
+    if (!adminUser) {
+        const bcrypt = require('bcryptjs');
+        const hashedPassword = await bcrypt.hash('admin123', 10);
+        await db.run(
+            'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+            ['System Admin', 'admin@dmiec.edu', hashedPassword, 'admin']
+        );
+        console.log('Default admin user created: admin@dmiec.edu / admin123');
+    }
+
     console.log('Database Initialized Successfully');
     return db;
 }

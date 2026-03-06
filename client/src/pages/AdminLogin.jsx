@@ -23,7 +23,14 @@ const AdminLogin = () => {
             localStorage.setItem('user', JSON.stringify(res.data.user));
             window.location.href = '/admin-dashboard';
         } catch (err) {
-            alert(err.response?.data?.message || 'Login failed');
+            console.error('Login error:', err);
+            if (err.response) {
+                alert(err.response.data?.message || 'Login failed');
+            } else if (err.request) {
+                alert('Connection to server failed. Please ensure the backend is running and accessible.');
+            } else {
+                alert('An unexpected error occurred.');
+            }
         }
     };
 
