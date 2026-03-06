@@ -35,15 +35,22 @@ const Auth = () => {
     useEffect(() => {
         const fetchHouses = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+                // Try dynamic URL first, then localhost as absolute fallback for local testing
+                const apiUrl = import.meta.env.VITE_API_URL || (window.location.hostname.includes('netlify') ? 'http://localhost:5000' : `http://${window.location.hostname}:5000`);
                 const res = await axios.get(`${apiUrl}/api/houses`);
-                if (Array.isArray(res.data)) {
+                if (Array.isArray(res.data) && res.data.length > 0) {
                     setHouses(res.data);
                 } else {
-                    console.error('Invalid houses data format');
+                    throw new Error('Empty data');
                 }
             } catch (err) {
-                console.error('Error fetching houses:', err);
+                console.warn('Backend houses not fetched, using defaults:', err.message);
+                setHouses([
+                    { id: 1, name: 'Red House' },
+                    { id: 2, name: 'Blue House' },
+                    { id: 3, name: 'Green House' },
+                    { id: 4, name: 'Yellow House' }
+                ]);
             }
         };
         fetchHouses();
