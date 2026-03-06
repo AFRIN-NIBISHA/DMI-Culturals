@@ -14,16 +14,17 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
+            const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
             if (filter === 'gallery') {
-                const res = await axios.get('http://localhost:5000/api/gallery');
+                const res = await axios.get(`${apiUrl}/api/gallery`);
                 setGallery(res.data);
             } else if (filter === 'content') {
-                const resSet = await axios.get('http://localhost:5000/api/settings');
-                const resAnn = await axios.get('http://localhost:5000/api/announcements');
+                const resSet = await axios.get(`${apiUrl}/api/settings`);
+                const resAnn = await axios.get(`${apiUrl}/api/announcements`);
                 setSettings(resSet.data);
                 setAnnouncements(resAnn.data);
             } else {
-                const res = await axios.get('http://localhost:5000/api/admin/students');
+                const res = await axios.get(`${apiUrl}/api/admin/students`);
                 setStudents(res.data);
             }
             setLoading(false);
@@ -42,7 +43,8 @@ const AdminDashboard = () => {
 
     const handleSettingUpdate = async (key, value) => {
         try {
-            await axios.post('http://localhost:5000/api/admin/settings', { key, value });
+            const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+            await axios.post(`${apiUrl}/api/admin/settings`, { key, value });
             fetchData();
         } catch (err) { alert('Update failed'); }
     };
@@ -50,7 +52,8 @@ const AdminDashboard = () => {
     const handleAddAnnouncement = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/admin/announcements', newAnn);
+            const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+            await axios.post(`${apiUrl}/api/admin/announcements`, newAnn);
             setNewAnn({ title: '', content: '' });
             fetchData();
         } catch (err) { alert('Failed to add news'); }
@@ -59,7 +62,8 @@ const AdminDashboard = () => {
     const handleDeleteAnn = async (id) => {
         if (window.confirm('Delete this news?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/admin/announcements/${id}`);
+                const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+                await axios.delete(`${apiUrl}/api/admin/announcements/${id}`);
                 fetchData();
             } catch (err) { alert('Delete failed'); }
         }
@@ -68,7 +72,8 @@ const AdminDashboard = () => {
     const handleAddPhoto = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/admin/gallery/add', newPhoto);
+            const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+            await axios.post(`${apiUrl}/api/admin/gallery/add`, newPhoto);
             alert('New photo added!');
             setNewPhoto({ image_url: '', category: 'sports' });
             fetchData();
@@ -79,7 +84,8 @@ const AdminDashboard = () => {
 
     const handleGalleryUpdate = async (id, newUrl) => {
         try {
-            await axios.post(`http://localhost:5000/api/admin/gallery/${id}`, { image_url: newUrl });
+            const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+            await axios.post(`${apiUrl}/api/admin/gallery/${id}`, { image_url: newUrl });
             alert('Image updated successfully!');
             fetchData(); // Refresh
         } catch (err) {
@@ -94,7 +100,8 @@ const AdminDashboard = () => {
     const handleDeleteRegistration = async (id) => {
         if (window.confirm('Are you sure you want to delete this registration?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/admin/registrations/${id}`);
+                const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+                await axios.delete(`${apiUrl}/api/admin/registrations/${id}`);
                 fetchData();
             } catch (err) {
                 alert('Failed to delete registration');
@@ -247,7 +254,8 @@ const AdminDashboard = () => {
                                             onClick={async () => {
                                                 if (window.confirm('Delete this photo?')) {
                                                     try {
-                                                        await axios.delete(`http://localhost:5000/api/admin/gallery/${item.id}`);
+                                                        const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+                                                        await axios.delete(`${apiUrl}/api/admin/gallery/${item.id}`);
                                                         fetchData();
                                                     } catch (err) { alert('Delete failed'); }
                                                 }

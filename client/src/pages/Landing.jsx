@@ -28,7 +28,7 @@ function Landing() {
   // Backend Connectivity Check & Content Fetch
   useEffect(() => {
     if (!loading) {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
 
       // Fetch Gallery
       fetch(`${apiUrl}/api/gallery`)
@@ -81,7 +81,8 @@ function Landing() {
     e.preventDefault();
     setRegStatus('submitting');
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/register`, {
+      const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+      const response = await fetch(`${apiUrl}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -35,10 +35,15 @@ const Auth = () => {
     useEffect(() => {
         const fetchHouses = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/houses');
-                setHouses(res.data);
+                const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+                const res = await axios.get(`${apiUrl}/api/houses`);
+                if (Array.isArray(res.data)) {
+                    setHouses(res.data);
+                } else {
+                    console.error('Invalid houses data format');
+                }
             } catch (err) {
-                console.error('Error fetching houses');
+                console.error('Error fetching houses:', err);
             }
         };
         fetchHouses();
@@ -59,7 +64,8 @@ const Auth = () => {
                 delete dataToSubmit.house_id;
             }
 
-            const res = await axios.post(`http://localhost:5000/api/auth/register`, dataToSubmit);
+            const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000`;
+            const res = await axios.post(`${apiUrl}/api/auth/register`, dataToSubmit);
             setSuccessMsg(res.data.message);
             setIsSuccess(true);
             // Reset only event related fields
